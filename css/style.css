@@ -1,0 +1,229 @@
+/* RESET & FULLSCREEN */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width:100%; height:100%; overflow:hidden; font-family: sans-serif; }
+
+/* SCENE LAYERS */
+.scene {
+  position: relative; 
+  width:100%; 
+  height:100vh; 
+}
+
+.background-layer,
+.foreground-layer,
+.content-layer {
+  position: absolute; left:0; width:100%;
+}
+
+.background-layer {
+  top: 0; height:100%; z-index: 1;
+  pointer-events: none;
+}
+
+.content-layer {
+    position: absolute;
+    top: 0;
+    bottom: 150px;
+    z-index: 6;
+    pointer-events: auto;
+    color: antiquewhite;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px; /* adjust to shift holes up/down */
+    overflow: visible;
+  }
+  
+/* Hide overlays when hidden attribute is present */
+.overlay[hidden] {
+  display: none;
+}
+
+/* GAME CONTAINER */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+
+#start-btn {
+    padding: 10px 24px;
+    font-size: 1rem;
+    background-color: #f9a825;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    pointer-events: auto;
+  }
+  
+  #start-btn:hover {
+    background-color: #ffc107;
+  }
+
+  .game-ui {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* space between title, button, score */
+    margin-top: 40px;
+    margin-bottom: 60px;
+    text-align: center;
+  }
+  
+  .game-ui h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.2;
+    color: #fff8e1;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  }
+  
+  .scoreboard {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 500;
+  }
+  
+
+/* HOLES GRID */
+.holes {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    gap: 15px;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 400px;
+    overflow: visible;
+  }
+  
+  
+/* HOLE BASICS */
+.hole {
+    width: 120px;
+  height: 150px; /* taller hole gives space for cat's head */
+  background-size: contain;
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
+}
+
+/* CAT POP-UP */
+.cat-container {
+    position: absolute;
+    bottom: -100%;
+    width: 100%;
+    height: 100%;
+    transition: bottom 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+  
+.hole.up .cat-container { bottom:0; }
+
+.cat-container img {
+ /* Cat size */
+  width:auto; 
+  height:90%;
+  display:block;
+  pointer-events: none;
+}
+
+/* Hide all cats by default */
+.cat-container img {
+    display: none;
+  }
+  
+  /* Show the selected cat based on added class */
+  .cat-container.show-normal .normal-cat,
+  .cat-container.show-cupcake .cupcake-cat,
+  .cat-container.show-bomb .bomb-cat {
+    display: block;
+    animation: popUp 0.9s ease;
+  }
+  
+  /* Simple pop-up animation */
+  @keyframes popUp {
+    0%   { transform: translateY(100%) scale(0.85); opacity: 0; }
+    60%  { transform: translateY(-5%) scale(1.05); opacity: 1; }
+    100% { transform: translateY(0) scale(1); }
+  }
+  
+  
+
+
+/* GAME OVER OVERLAY */
+.overlay {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  z-index:4;
+}
+.overlay .message {
+    background: rgba(15, 15, 15, 0.6);
+    padding: 32px 40px;
+    border-radius: 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    color: #fff;
+  }
+  
+  #restart-btn {
+    padding: 10px 24px;
+    font-size: 1rem;
+    background-color: #f9a825;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  #restart-btn:hover {
+    background-color: #ffc107;
+  }
+
+  #timer {
+    font-size: 1.2rem;
+    color: #ffeb3b;
+    font-weight: 600;
+    margin-top: 10px;
+  }
+
+  @keyframes scrollForeground {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ground-flipped {
+    width: 200%;
+    height: 600px; /* Force it visible */
+    object-fit: cover;
+    animation: scrollForeground 20s linear infinite;
+  }
+
+  .foreground-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 600px;
+    width: 100%;
+    overflow: visible;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+  }
+

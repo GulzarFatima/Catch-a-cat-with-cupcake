@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catch a Cat with a Cupcake: Whack‑a‑Mole</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="scene">
+
+    <!-- Background stays static -->
+    <div class="background-layer">
+      <img src="images/background.png" alt="Desert with Saturn overhead" />
+    </div>
+
+    <!-- Foreground (ground) stays static -->
+    <div class="foreground-layer">
+      <img src="images/foreground1.png" alt="Ground terrain" class="ground-flipped" />
+    </div>
+
+    <!-- Content: Whack‑a‑Mole holes & cats -->
+    <div class="content-layer">
+      <div class="game-container">
+
+        <div class="game-ui">
+        <h1>Catch a Cat with a Cupcake</h1>
+        <button id="start-btn">Start Game</button>
+        <div class="scoreboard">Score: <span id="score">0</span></div>
+        <div class="timer" id="timer" hidden>
+            Time Left: <span id="time-left">60</span>s
+          </div>
+        </div>
+
+        <div class="holes">
+            <div class="hole" data-index="0">
+              <div class="cat-container">
+                <img src="images/001.png" class="normal-cat" alt="Normal Cat" />
+                <img src="images/002.png" class="cupcake-cat" alt="Cupcake Cat" />
+                <img src="images/00.png" class="bomb-cat" alt="Bomb Cat" />
+              </div>
+            </div>
+          
+            <div class="hole" data-index="1">
+              <div class="cat-container">
+                <img src="images/001.png" class="normal-cat" alt="Normal Cat" />
+                <img src="images/002.png" class="cupcake-cat" alt="Cupcake Cat" />
+                <img src="images/00.png" class="bomb-cat" alt="Bomb Cat" />
+              </div>
+            </div>
+          
+            <div class="hole" data-index="2">
+              <div class="cat-container">
+                <img src="images/001.png" class="normal-cat" alt="Normal Cat" />
+                <img src="images/002.png" class="cupcake-cat" alt="Cupcake Cat" />
+                <img src="images/00.png" class="bomb-cat" alt="Bomb Cat" />
+              </div>
+            </div>
+          
+            <div class="hole" data-index="3">
+              <div class="cat-container">
+                <img src="images/001.png" class="normal-cat" alt="Normal Cat" />
+                <img src="images/002.png" class="cupcake-cat" alt="Cupcake Cat" />
+                <img src="images/00.png" class="bomb-cat" alt="Bomb Cat" />
+              </div>
+            </div>
+          
+            <div class="hole" data-index="4">
+              <div class="cat-container">
+                <img src="images/001.png" class="normal-cat" alt="Normal Cat" />
+                <img src="images/002.png" class="cupcake-cat" alt="Cupcake Cat" />
+                <img src="images/00.png" class="bomb-cat" alt="Bomb Cat" />
+              </div>
+            </div>
+          
+            <div class="hole" data-index="5">
+              <div class="cat-container">
+                <img src="images/001.png" class="normal-cat" alt="Normal Cat" />
+                <img src="images/002.png" class="cupcake-cat" alt="Cupcake Cat" />
+                <img src="images/00.png" class="bomb-cat" alt="Bomb Cat" />
+              </div>
+            </div>
+          </div>
+          
+          
+
+        <!-- Game Over overlay is hidden by default -->
+        <div id="game-over" class="overlay" hidden>
+          <div class="message">
+            <h2>💥 Game Over</h2>
+            <p>Your score: <span id="final-score">0</span></p>
+            <button id="restart-btn">Play Again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<audio id="sound-normal" src="audio/normal.mp3"></audio>
+<audio id="sound-cupcake" src="audio/cupcake.mp3"></audio>
+<audio id="sound-bomb" src="audio/bomb.mp3"></audio>
+<audio id="bg-music" src="audio/bg-music.mp3" loop></audio>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
