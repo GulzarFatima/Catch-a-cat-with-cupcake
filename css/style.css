@@ -1,229 +1,258 @@
-/* RESET & FULLSCREEN */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width:100%; height:100%; overflow:hidden; font-family: sans-serif; }
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
-/* SCENE LAYERS */
+html,
+body {
+  font-family: sans-serif;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* SCENE */
 .scene {
-  position: relative; 
-  width:100%; 
-  height:100vh; 
+  width: 100%;
+  position: relative;
+  height: 100vh;
 }
 
 .background-layer,
 .foreground-layer,
 .content-layer {
-  position: absolute; left:0; width:100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
 }
 
 .background-layer {
-  top: 0; height:100%; z-index: 1;
+  z-index: 1;
+  height: 100%;
+  top: 0;
   pointer-events: none;
 }
 
 .content-layer {
-    position: absolute;
-    top: 0;
-    bottom: 150px;
-    z-index: 6;
-    pointer-events: auto;
-    color: antiquewhite;
-  
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px; /* adjust to shift holes up/down */
-    overflow: visible;
-  }
-  
-/* Hide overlays when hidden attribute is present */
+  z-index: 6;
+  top: 0;
+  bottom: 150px;
+  pointer-events: auto;
+  color: antiquewhite;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-bottom: 20px;
+  overflow: visible;
+}
+
 .overlay[hidden] {
   display: none;
 }
 
 /* GAME CONTAINER */
 .game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-  
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 
+/* START BUTTON */
 #start-btn {
-    padding: 10px 24px;
-    font-size: 1rem;
-    background-color: #f9a825;
-    color: #000;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    pointer-events: auto;
-  }
-  
-  #start-btn:hover {
-    background-color: #ffc107;
-  }
+  background-color: #f9a825;
+  border: none;
+  cursor: pointer;
+  padding: 10px 24px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  font-size: 1rem;
+  pointer-events: auto;
+  animation: button-hover 0.2s ease forwards;
+  color: #000;
+}
 
-  .game-ui {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px; /* space between title, button, score */
-    margin-top: 40px;
-    margin-bottom: 60px;
-    text-align: center;
-  }
-  
-  .game-ui h1 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.2;
-    color: #fff8e1;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
-  }
-  
-  .scoreboard {
-    font-size: 1.2rem;
-    color: white;
-    font-weight: 500;
-  }
-  
+#start-btn:hover {
+  background-color: #ffc107;
+}
+
+/* GAME UI - scoreboard & title */
+.game-ui {
+  margin-top: 40px;
+  margin-bottom: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.game-ui h1 {
+  font-weight: bold;
+  font-size: 2.2rem;
+  margin: 0;
+  color: #fff8e1;
+  line-height: 1.2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.scoreboard {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: white;
+}
 
 /* HOLES GRID */
 .holes {
-    display: grid;
-    grid-template-columns: repeat(3, 120px);
-    gap: 15px;
-    justify-content: center;
-    margin: 20px auto;
-    max-width: 400px;
-    overflow: visible;
-  }
-  
-  
-/* HOLE BASICS */
-.hole {
-    width: 120px;
-  height: 150px; /* taller hole gives space for cat's head */
-  background-size: contain;
-  position: relative;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  gap: 15px;
+  max-width: 400px;
+  justify-content: center;
   overflow: visible;
-  cursor: pointer;
 }
 
-/* CAT POP-UP */
-.cat-container {
-    position: absolute;
-    bottom: -100%;
-    width: 100%;
-    height: 100%;
-    transition: bottom 0.3s ease;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    overflow-x: hidden;
-  }
-  
-.hole.up .cat-container { bottom:0; }
+/* HOLE STYLING */
+.hole {
+  position: relative;
+  background-size: contain;
+  width: 120px;
+  height: 150px;
+  cursor: pointer;
+  overflow: visible;
+}
 
+/* CAT POP-UP CONTAINER */
+.cat-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: -100%;
+  transition: bottom 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow-x: hidden;
+}
+
+.hole.up .cat-container {
+  bottom: 0;
+}
+
+/* CAT IMAGE STYLING */
 .cat-container img {
- /* Cat size */
-  width:auto; 
-  height:90%;
-  display:block;
+  width: auto;
+  height: 90%;
+  display: none;
   pointer-events: none;
 }
 
-/* Hide all cats by default */
-.cat-container img {
-    display: none;
-  }
-  
-  /* Show the selected cat based on added class */
-  .cat-container.show-normal .normal-cat,
-  .cat-container.show-cupcake .cupcake-cat,
-  .cat-container.show-bomb .bomb-cat {
-    display: block;
-    animation: popUp 0.9s ease;
-  }
-  
-  /* Simple pop-up animation */
-  @keyframes popUp {
-    0%   { transform: translateY(100%) scale(0.85); opacity: 0; }
-    60%  { transform: translateY(-5%) scale(1.05); opacity: 1; }
-    100% { transform: translateY(0) scale(1); }
-  }
-  
-  
+/* Cat types disply */
+.cat-container.show-normal .normal-cat,
+.cat-container.show-cupcake .cupcake-cat,
+.cat-container.show-bomb .bomb-cat {
+  display: block;
+  animation: popUp 0.9s ease forwards;
+}
 
+/* CAT POPPING ANIMATION */
+@keyframes popUp {
+  0% {
+    transform: translateY(100%) scale(0.85);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-5%) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
 
 /* GAME OVER OVERLAY */
 .overlay {
-  position:absolute; top:0; left:0;
-  width:100%; height:100%;
-  display:flex; align-items:center; justify-content:center;
-  z-index:4;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
 }
+
 .overlay .message {
-    background: rgba(15, 15, 15, 0.6);
-    padding: 32px 40px;
-    border-radius: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    color: #fff;
-  }
-  
-  #restart-btn {
-    padding: 10px 24px;
-    font-size: 1rem;
-    background-color: #f9a825;
-    color: #000;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  #restart-btn:hover {
-    background-color: #ffc107;
-  }
+  background: rgba(15, 15, 15, 0.6);
+  padding: 32px 40px;
+  text-align: center;
+  color: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
 
-  #timer {
-    font-size: 1.2rem;
-    color: #ffeb3b;
-    font-weight: 600;
-    margin-top: 10px;
-  }
+/* RESTART BUTTON */
+#restart-btn {
+  padding: 10px 24px;
+  font-size: 1rem;
+  background-color: #f9a825;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
 
-  @keyframes scrollForeground {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+#restart-btn:hover {
+  background-color: #ffc107;
+}
 
-  .ground-flipped {
-    width: 200%;
-    height: 600px; /* Force it visible */
-    object-fit: cover;
-    animation: scrollForeground 20s linear infinite;
-  }
+/* TIMER */
+#timer {
+  font-size: 1.2rem;
+  color: #ffeb3b;
+  font-weight: 600;
+  margin-top: 10px;
+}
 
-  .foreground-layer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 600px;
-    width: 100%;
-    overflow: visible;
-    z-index: 2;
-    pointer-events: none;
-    display: flex;
-    align-items: flex-end;
-  }
+/* FOREGROUND ANIMATION */
+@keyframes scrollForeground {
+  0% { transform: translateX(0);}
+  100% {transform: translateX(-50%);}
+}
 
+/* GROUND LAYER ANIMATION */
+.ground-flipped {
+  width: 200%;
+  height: 600px;
+  object-fit: cover;
+  animation: scrollForeground 20s linear infinite;
+}
+
+/* FOREGROUND LAYER */
+.foreground-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 600px;
+  width: 100%;
+  overflow: visible;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* BUTTON HOVER ANIMATION */
+@keyframes button-hover {
+  0% {background-color: #f9a825;}
+  100% { background-color: #ffc107;}
+}
